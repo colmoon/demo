@@ -1,0 +1,20 @@
+CREATE TABLE `t_quartz_job` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `bean_name` varchar(128) NOT NULL COMMENT '包名+类名',
+  `job_name` varchar(128) DEFAULT NULL COMMENT '任务名',
+  `job_group` varchar(64) DEFAULT NULL COMMENT '任务组',
+  `trigger_name` varchar(128) DEFAULT NULL COMMENT '触发器名称',
+  `trigger_group` varchar(64) DEFAULT NULL COMMENT '触发器组',
+  `trigger_type` varchar(2) DEFAULT NULL COMMENT '触发器类型，00代表cronTrigger，01代表simpleTrigger',
+  `cron_expression` varchar(64) DEFAULT NULL COMMENT 'cron表达式',
+  `simple_trigger_interval` int(11) DEFAULT NULL COMMENT '间隔时间，单位秒',
+  `simple_trigger_count` int(11) DEFAULT NULL COMMENT '运行次数',
+  `delay` int(11) DEFAULT NULL COMMENT '延时，单位秒',
+  `job_status` varchar(2) DEFAULT NULL COMMENT '任务状态,	00代表停止状态，01代表暂停状态，02代表运行状态',
+  `description` varchar(128) DEFAULT NULL COMMENT '任务描述',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  `start_up` varchar(2) DEFAULT NULL COMMENT '是否随项目启动,00代表否，01代表是',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `bean_name, job_name, trigger_name` (`bean_name`,`job_name`,`trigger_name`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=74 DEFAULT CHARSET=utf8 COMMENT='定时任务 ';

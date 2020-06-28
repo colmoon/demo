@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.quartz.demo5.mapper.QuartzJobMapper">
+    <resultMap id="TQuartzJobMap" type="com.quartz.demo5.QuartzJob">
+        <result property="id" column="id"/>
+        <result property="beanName" column="bean_name"/>
+        <result property="jobName" column="job_name"/>
+        <result property="jobGroup" column="job_group"/>
+        <result property="triggerName" column="trigger_name"/>
+        <result property="triggerGroup" column="trigger_group"/>
+        <result property="cronExpression" column="cron_expression"/>
+        <result property="jobStatus" column="job_status"/>
+        <result property="description" column="description"/>
+        <result property="createTime"  column="create_time"/>
+        <result property="updateTime"  column="update_time"/>
+        <result property="startUp" column="start_up"/>
+        <result property="triggerType"  column="trigger_type"/>
+        <result property="simpleTriggerCount"  column="simple_trigger_count"/>
+        <result property="simpleTriggerInterval" column="simple_trigger_interval"/>
+    </resultMap>
+    <select id="list" resultMap="TQuartzJobMap">
+        select
+        id,bean_name,job_name,job_group,trigger_name,trigger_group,trigger_type,cron_expression,simple_trigger_interval,simple_trigger_count,delay,job_status,description,DATE_FORMAT(create_time,'%Y-%m-%d %H:%i:%s') as create_time,DATE_FORMAT(update_time,'%Y-%m-%d %H:%i:%s') as update_time,start_up
+        from t_quartz_job
+        order by id desc
+    </select>
+    <select id="pageList" resultMap="TQuartzJobMap">
+        select
+        id,bean_name,job_name,job_group,trigger_name,trigger_group,trigger_type,cron_expression,simple_trigger_interval,simple_trigger_count,delay,job_status,description,DATE_FORMAT(create_time,'%Y-%m-%d %H:%i:%s') as create_time,DATE_FORMAT(update_time,'%Y-%m-%d %H:%i:%s') as update_time,start_up
+        from t_quartz_job
+        order by id desc
+        limit #{page.offset},#{page.limit}
+    </select>
+    <select id="total" resultType="int">
+        select count(1) from t_quartz_job
+    </select>
+    <select id="get" resultMap="TQuartzJobMap">
+        select
+        id,bean_name,job_name,job_group,trigger_name,trigger_group,trigger_type,cron_expression,simple_trigger_interval,simple_trigger_count,delay,job_status,description,create_time,update_time,start_up
+        from t_quartz_job
+        where id=#{id}
+    </select>
+    <insert id="add" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        insert into t_quartz_job(bean_name,job_name,job_group,trigger_name,trigger_group,trigger_type,cron_expression,simple_trigger_interval,simple_trigger_count,delay,job_status,description,start_up)values
+        (#{beanName},#{jobName},#{jobGroup},#{triggerName},#{triggerGroup},#{triggerType},#{cronExpression},#{simpleTriggerInterval},#{simpleTriggerCount},#{delay},#{jobStatus},#{description},#{startUp})
+    </insert>
+    <update id="update">
+        update t_quartz_job
+        <trim prefix="set" suffixOverrides="," >
+            <if test='beanName != null and beanName!=""'>
+                bean_name=#{beanName},
+            </if>
+            <if test='jobName != null and jobName!=""'>
+                job_name=#{jobName},
+            </if>
+            <if test='jobGroup != null and jobGroup!=""'>
+                job_group=#{jobGroup},
+            </if>
+            <if test='triggerName != null and triggerName!=""'>
+                trigger_name=#{triggerName},
+            </if>
+            <if test='triggerGroup != null and triggerGroup!=""'>
+                trigger_group=#{triggerGroup},
+            </if>
+            <if test='triggerType != null and triggerType!=""'>
+                trigger_type=#{triggerType},
+            </if>
+            <if test='cronExpression != null and cronExpression!=""'>
+                cron_expression=#{cronExpression},
+            </if>
+            <if test='simpleTriggerInterval != null and simpleTriggerInterval!=""'>
+                simple_trigger_interval=#{simpleTriggerInterval},
+            </if>
+            <if test='simpleTriggerCount != null and simpleTriggerCount!=""'>
+                simple_trigger_count=#{simpleTriggerCount},
+            </if>
+            <if test='delay != null and delay!=""'>
+                delay=#{delay},
+            </if>
+            <if test='jobStatus != null and jobStatus!=""'>
+                job_status=#{jobStatus},
+            </if>
+            <if test='description != null and description!=""'>
+                description=#{description},
+            </if>
+            <if test='startUp != null and startUp!=""'>
+                start_up=#{startUp},
+            </if>
+        </trim>
+        where id=#{id}
+    </update>
+    <delete id="delete">
+        delete from t_quartz_job
+        where id in
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+    <update id="updateAll">
+        update t_quartz_job set job_status = '00'
+    </update>
+    <select id="listStartUp" resultMap="TQuartzJobMap">
+        select
+        id,bean_name,job_name,job_group,trigger_name,trigger_group,trigger_type,cron_expression,simple_trigger_interval,simple_trigger_count,delay,job_status,description,create_time,update_time,start_up
+        from t_quartz_job
+        where start_up = '01'
+        order by id desc
+    </select>
+</mapper>
