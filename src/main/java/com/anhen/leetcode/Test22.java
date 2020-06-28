@@ -28,7 +28,7 @@ import java.util.List;
 
 public class Test22 {
     public static void main(String[] args) {
-        List<String> combinations = generateParenthesis3(3);
+        List<String> combinations = generateParenthesis4(3);
         System.out.println(combinations.toString());
     }
 
@@ -108,6 +108,32 @@ public class Test22 {
         }
         if (right > 0){
             dfs(cur + ")", left, right - 1, result);
+        }
+    }
+
+    //深度优先遍历 加法
+    private static List<String> generateParenthesis4(int n) {
+        List<String> ans = new ArrayList<>();
+        dfs2("", 0, 0, ans, n);
+        return ans;
+    }
+
+
+    //深度优先遍历 加法
+    private static void dfs2(String cur, int left, int right, List<String> result, int n){
+        if (left == n && right == n){
+            result.add(cur);
+            return;
+        }
+        //剪枝，当剩余的左括号大于右括号，无效
+        if (left < right){
+            return;
+        }
+        if (left < n){
+            dfs2(cur + "(", left + 1, right, result, n);
+        }
+        if (right < n){
+            dfs2(cur + ")", left, right + 1, result, n);
         }
     }
 
