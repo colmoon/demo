@@ -1,7 +1,10 @@
 package com.anhen.leetcode;
 
+
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 /**
  * @ClassName Test22
@@ -28,7 +31,7 @@ import java.util.List;
 
 public class Test22 {
     public static void main(String[] args) {
-        List<String> combinations = generateParenthesis4(3);
+        List<String> combinations = generateParenthesis5(3);
         System.out.println(combinations.toString());
     }
 
@@ -41,8 +44,9 @@ public class Test22 {
 
     private static void generateAll(char[] current, int pos, List<String> result) {
         if (pos == current.length) {
-            if (valid(current))
+            if (valid(current)) {
                 result.add(new String(current));
+            }
         } else {
             current[pos] = '(';
             generateAll(current, pos+1, result);
@@ -54,9 +58,14 @@ public class Test22 {
     private static boolean valid(char[] current) {
         int balance = 0;
         for (char c: current) {
-            if (c == '(') balance++;
-            else balance--;
-            if (balance < 0) return false;
+            if (c == '(') {
+                balance++;
+            } else {
+                balance--;
+            }
+            if (balance < 0) {
+                return false;
+            }
         }
         return (balance == 0);
     }
@@ -136,5 +145,44 @@ public class Test22 {
             dfs2(cur + ")", left, right + 1, result, n);
         }
     }
+
+    public static class Node {
+        //当前得到的字符串
+        private String res;
+        //当前剩余的左括号数量
+        private int left;
+        //当前剩余的右括号数量
+        private int right;
+
+        public Node(String res, int left, int right){
+            this.res = res;
+            this.left = left;
+            this.right = right;
+        }
+    }
+
+    //广度优先遍历 队列
+    private static List<String> generateParenthesis5(int n) {
+        List<String> ans = new ArrayList<>();
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(new Node("", n, n));
+        while (!queue.isEmpty()){
+            Node node = queue.poll();
+            if (node.left == 0 && node.right == 0){
+                ans.add(node.res);
+            }
+            if (node.left > node.right){
+                continue;
+            }
+            if (node.left > 0){
+                queue.add(new Node(node.res + "(", node.left - 1, node.right));
+            }
+            if (node.right > 0){
+                queue.add(new Node(node.res + ")", node.left, node.right - 1));
+            }
+        }
+        return ans;
+    }
+
 
 }

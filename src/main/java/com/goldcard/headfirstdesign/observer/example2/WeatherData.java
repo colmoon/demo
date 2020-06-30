@@ -20,7 +20,6 @@ package com.goldcard.headfirstdesign.observer.example2;
 import java.util.Observable;
 
 import com.goldcard.headfirstdesign.observer.example1.WeatherParameter;
-import com.sun.org.apache.regexp.internal.recompile;
 
 /**
  * 

@@ -1,7 +1,5 @@
 package com.anhen.leetcode;
 
-import java.util.Stack;
-
 /**
  * @ClassName Test23
  * @Description
@@ -29,7 +27,7 @@ public class Test23 {
 
 
     //Definition for singly-linked list.
-    public class ListNode {
+    public static class ListNode {
         int val;
         ListNode next;
 

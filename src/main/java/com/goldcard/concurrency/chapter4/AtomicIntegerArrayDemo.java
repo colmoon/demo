@@ -19,7 +19,6 @@ package com.goldcard.concurrency.chapter4;
 
 import java.util.concurrent.atomic.AtomicIntegerArray;
 
-import com.sun.org.apache.bcel.internal.generic.NEW;
 
 /**  
 

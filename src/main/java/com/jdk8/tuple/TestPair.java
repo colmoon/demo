@@ -1,6 +1,5 @@
 package com.jdk8.tuple;
 
-import cn.hutool.core.lang.Tuple;
 import javafx.util.Pair;
 
 /**
