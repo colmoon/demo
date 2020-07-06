@@ -96,6 +96,7 @@ public class Test23 {
         }
         //创建一个堆，并设置元素的排序方式
         PriorityQueue<ListNode> queue = new PriorityQueue(new Comparator<ListNode>() {
+            @Override
             public int compare(ListNode o1, ListNode o2) {
                 return (o1.val - o2.val);
             }
