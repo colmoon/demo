@@ -57,6 +57,7 @@ public class Test39 {
         return result;
     }
 
+    //回溯
     private void bracket(List<List<Integer>> result, List<Integer> tempList, int[] candidates, int start, int target){
         if (target == 0){
             result.add(new ArrayList<>(tempList));

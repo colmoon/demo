@@ -43,6 +43,7 @@ public class Test46 {
         return result;
     }
 
+    //回溯
     private void bracket(List<List<Integer>> result, List<Integer> tempList, int[] nums){
         if (tempList.size() == nums.length){
             result.add(new ArrayList<>(tempList));
