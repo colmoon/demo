@@ -46,7 +46,8 @@ public class Permutations {
         if(tempList.size() == nums.length){
             //全局变量添加一个满足条件的集合
             list.add(new ArrayList<>(tempList));
-        } else{
+        } else {
+            //遍历所有情况
             for(int i = 0; i < nums.length; i++){
                 if(tempList.contains(nums[i])) {
                     continue;
