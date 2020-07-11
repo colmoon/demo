@@ -38,8 +38,9 @@ public class BiTree<E> {
         System.out.println();
     }
     private void preOrderTraverse(BiTNode<E> node) {
-        if(node==null)
+        if(node==null) {
             return;
+        }
         System.out.print(node.data);
         preOrderTraverse(node.lchild);
         preOrderTraverse(node.rchild);
@@ -53,8 +54,9 @@ public class BiTree<E> {
         System.out.println();
     }
     private void inOrderTraverse(BiTNode<E> node) {
-        if(node==null)
+        if(node==null) {
             return;
+        }
         inOrderTraverse(node.lchild);
         System.out.print(node.data);
         inOrderTraverse(node.rchild);
@@ -68,8 +70,9 @@ public class BiTree<E> {
         System.out.println();
     }
     private void postOrderTraverse(BiTNode<E> node) {
-        if(node==null)
+        if(node==null) {
             return;
+        }
         postOrderTraverse(node.lchild);
         postOrderTraverse(node.rchild);
         System.out.print(node.data);
@@ -84,8 +87,8 @@ public class BiTree<E> {
         preOrder2(root);
         System.out.println();
     }
-    private void preOrder2(BiTNode node) {
-        Stack<BiTNode> stack = new Stack<BiTNode>();
+    private void preOrder2(BiTNode<E> node) {
+        Stack<BiTNode<E>> stack = new Stack<>();
         while(node!=null||!stack.isEmpty()) {
             while(node!=null) {
                 System.out.print(node.data);
@@ -104,8 +107,8 @@ public class BiTree<E> {
         inOrder2(root);
         System.out.println();
     }
-    private void inOrder2(BiTNode node) {
-        Stack<BiTNode> stack = new Stack<BiTNode>();
+    private void inOrder2(BiTNode<E> node) {
+        Stack<BiTNode<E>> stack = new Stack<>();
         while(node!=null||!stack.isEmpty()) {
             while(node!=null) {
                 stack.push(node);
@@ -125,8 +128,8 @@ public class BiTree<E> {
         postOrder2(root);
         System.out.println();
     }
-    private void postOrder2(BiTNode node) {
-        Stack<BiTNode> stack = new Stack<BiTNode>();
+    private void postOrder2(BiTNode<E> node) {
+        Stack<BiTNode<E>> stack = new Stack<>();
         Stack<Integer> tag = new Stack<Integer>();
 //      while(node!=null||!stack.isEmpty()) {
 //          while(node!=null){
@@ -176,10 +179,12 @@ public class BiTree<E> {
         while(!list.isEmpty()) {
             node=list.poll();
             System.out.print(node.data);
-            if(node.lchild!=null)
+            if(node.lchild!=null) {
                 list.offer(node.lchild);
-            if(node.rchild!=null)
+            }
+            if(node.rchild!=null) {
                 list.offer(node.rchild);
+            }
         }
     }
 
