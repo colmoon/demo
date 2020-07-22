@@ -1,4 +1,4 @@
-package com.anhen.leetcode;
+package com.anhen.leetcode.binary.search;
 
 import java.util.Arrays;
 

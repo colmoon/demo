@@ -1,4 +1,4 @@
-package com.anhen.leetcode;
+package com.anhen.leetcode.divide.conquer;
 
 import java.util.Comparator;
 import java.util.PriorityQueue;

@@ -1,4 +1,4 @@
-package com.anhen.leetcode;
+package com.anhen.leetcode.dynamic;
 
 /**
  * @classname: Test10
@@ -65,45 +65,18 @@ public class Test10 {
         System.out.println(isMatch2("mississippi","mis*is*p*."));
     }
 
-    //自己写尚未通过
-    public static boolean isMatch(String s, String p) {
-        int i = 0, j = 0;
-        while (i < s.length() && j < p.length()){
-            if (s.charAt(i) == p.charAt(j)){
-                i++;
-                j++;
-            } else {
-                if (p.charAt(j) == '.'){
-                    i++;
-                    j++;
-                } else if (p.charAt(j) == '*'){
-                    if (j >= 1){
-                        while (i < s.length() && (s.charAt(i) == p.charAt(j-1) || p.charAt(j-1) == '.')){
-                            i++;
-                        }
-                        j++;
-                    } else {
-                        j++;
-                    }
-                } else if (j+1 < p.length() && p.charAt(j+1) == '*'){
-                    j = j + 2;
-                } else {
-                    return false;
-                }
-            }
-        }
-        return i >= s.length() && j >= p.length();
-    }
-
     /*动态规划
     p[i,j] = true 表示 s的 i 个字符串与 p 的 j 个字符串匹配
     */
     public static boolean isMatch2(String s, String p) {
         boolean[][] dp = new boolean[s.length() + 1][p.length() + 1];
-        dp[0][0] = true;//dp[i][j] 表示 s 的前 i 个是否能被 p 的前 j 个匹配
-        for (int i = 0; i < p.length(); i++) { // here's the p's length, not s's
+        //dp[i][j] 表示 s 的前 i 个是否能被 p 的前 j 个匹配
+        dp[0][0] = true;
+        // here's the p's length, not s's
+        for (int i = 0; i < p.length(); i++) {
             if (p.charAt(i) == '*' && dp[0][i - 1]) {
-                dp[0][i + 1] = true; // here's y axis should be i+1
+                // here's y axis should be i+1
+                dp[0][i + 1] = true;
             }
         }
         for (int i = 0; i < s.length(); i++){

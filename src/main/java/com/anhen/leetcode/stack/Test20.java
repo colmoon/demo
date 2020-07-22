@@ -1,4 +1,4 @@
-package com.anhen.leetcode;
+package com.anhen.leetcode.stack;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -63,7 +63,7 @@ public class Test20 {
                 stack.push(s.charAt(i));
             } else {
                 Character character = stack.isEmpty() ? '#' : stack.pop();
-                if (!(character == map.get(s.charAt(i)))){
+                if (!(character.equals(map.get(s.charAt(i))))){
                     return false;
                 }
             }

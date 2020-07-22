@@ -1,4 +1,4 @@
-package com.anhen.leetcode;
+package com.anhen.leetcode.pointer;
 
 import java.util.ArrayList;
 import java.util.Arrays;

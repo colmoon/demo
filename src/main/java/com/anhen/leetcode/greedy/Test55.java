@@ -1,4 +1,4 @@
-package com.anhen.leetcode;
+package com.anhen.leetcode.greedy;
 
 /**
  * @classname: Test55
