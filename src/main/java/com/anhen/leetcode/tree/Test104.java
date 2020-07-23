@@ -2,6 +2,9 @@ package com.anhen.leetcode.tree;
 
 import com.anhen.leetcode.tree.model.TreeNode;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 /**
  * @classname: Test104
  * @description:
@@ -32,6 +35,7 @@ public class Test104 {
         return getDepth(root, 0);
     }
 
+    //递归
     private int getDepth(TreeNode treeNode, int depth){
         if (treeNode == null){
             return depth;
@@ -41,6 +45,7 @@ public class Test104 {
         return Math.max(leftDepth, rightDepth);
     }
 
+    //递归
     public int getDepth2(TreeNode treeNode) {
         if (treeNode == null) {
             return 0;
@@ -49,5 +54,32 @@ public class Test104 {
             int rightDepth = getDepth2(treeNode.right);
             return Math.max(leftDepth, rightDepth) + 1;
         }
+    }
+
+    // 层次遍历获取深度
+    public int maxDepth2(TreeNode root) {
+        if(root == null) {
+            return 0;
+        }
+        //层序遍历辅助队列
+        Queue<TreeNode> helper = new LinkedList<>();
+        helper.add(root);
+        //记录二叉树层次
+        int level = 0;
+        while(!helper.isEmpty()){
+            //当前层中的结点数
+            int levelLength = helper.size();
+            for(int i = 0; i<levelLength; i++){
+                TreeNode temp = helper.poll();
+                if(temp.left != null) {
+                    helper.add(temp.left);
+                }
+                if(temp.right != null) {
+                    helper.add(temp.right);
+                }
+            }
+            level++;
+        }
+        return level;
     }
 }
