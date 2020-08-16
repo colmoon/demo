@@ -909,3 +909,334 @@ ioc：Inversionof Control（中文：控制反转）是 spring 的核心，对�
 - spring aop：提供了面向切面的编程实现，让你可以自定义拦截器、切点等。
 - spring Web：提供了针对 Web 开发的集成特性，例如文件上传，利用 servlet listeners 进行 ioc 容器初始化和针对 Web 的 ApplicationContext。
 - spring Web mvc：spring 中的 mvc 封装包提供了 Web 应用的 Model-View-Controller（MVC）的实现。
+
+## 94. spring 常用的注入方式有哪些？
+
+- setter 属性注入
+- 构造方法注入
+- 注解方式注入
+
+## 95. spring 中的 bean 是线程安全的吗？
+
+spring 中的 bean 默认是单例模式，spring 框架并没有对单例 bean 进行多线程的封装处理。
+
+实际上大部分时候 spring bean 无状态的（比如 dao 类），所有某种程度上来说 bean 也是安全的，但如果 bean 有状态的话（比如 view model 对象），那就要开发者自己去保证线程安全了，最简单的就是改变 bean 的作用域，把“singleton”变更为“prototype”，这样请求 bean 相当于 new Bean()了，所以就可以保证线程安全了。
+
+- 有状态就是有数据存储功能。
+- 无状态就是不会保存数据。
+
+## 96. spring 支持几种 bean 的作用域？
+
+spring 支持 5 种作用域，如下：
+
+- singleton：spring ioc 容器中只存在一个 bean 实例，bean 以单例模式存在，是系统默认值；
+- prototype：每次从容器调用 bean 时都会创建一个新的示例，既每次 getBean()相当于执行 new Bean()操作；
+- Web 环境下的作用域：
+- request：每次 http 请求都会创建一个 bean；
+- session：同一个 http session 共享一个 bean 实例；
+- global-session：用于 portlet 容器，因为每个 portlet 有单独的 session，globalsession 提供一个全局性的 http session。
+
+**注意：** 使用 prototype 作用域需要慎重的思考，因为频繁创建和销毁 bean 会带来很大的性能开销。
+
+## 97. spring 自动装配 bean 有哪些方式？
+
+- no：默认值，表示没有自动装配，应使用显式 bean 引用进行装配。
+- byName：它根据 bean 的名称注入对象依赖项。
+- byType：它根据类型注入对象依赖项。
+- 构造函数：通过构造函数来注入依赖项，需要设置大量的参数。
+- autodetect：容器首先通过构造函数使用 autowire 装配，如果不能，则通过 byType 自动装配。
+
+## 98. spring 事务实现方式有哪些？
+
+- 声明式事务：声明式事务也有两种实现方式，基于 xml 配置文件的方式和注解方式（在类上添加 @Transaction 注解）。
+- 编码方式：提供编码的形式管理和维护事务。
+
+## 99. 说一下 spring 的事务隔离？
+
+spring 有五大隔离级别，默认值为 ISOLATION_DEFAULT（使用数据库的设置），其他四个隔离级别和数据库的隔离级别一致：
+
+ISOLATION_DEFAULT：用底层数据库的设置隔离级别，数据库设置的是什么我就用什么；
+
+ISOLATION*READ*UNCOMMITTED：未提交读，最低隔离级别、事务未提交前，就可被其他事务读取（会出现幻读、脏读、不可重复读）；
+
+ISOLATION*READ*COMMITTED：提交读，一个事务提交后才能被其他事务读取到（会造成幻读、不可重复读），SQL server 的默认级别；
+
+ISOLATION*REPEATABLE*READ：可重复读，保证多次读取同一个数据时，其值都和事务开始时候的内容是一致，禁止读取到别的事务未提交的数据（会造成幻读），MySQL 的默认级别；
+
+ISOLATION_SERIALIZABLE：序列化，代价最高最可靠的隔离级别，该隔离级别能防止脏读、不可重复读、幻读。
+
+**脏读** ：表示一个事务能够读取另一个事务中还未提交的数据。比如，某个事务尝试插入记录 A，此时该事务还未提交，然后另一个事务尝试读取到了记录 A。
+
+**不可重复读** ：是指在一个事务内，多次读同一数据。
+
+**幻读** ：指同一个事务内多次查询返回的结果集不一样。比如同一个事务 A 第一次查询时候有 n 条记录，但是第二次同等条件下查询却有 n+1 条记录，这就好像产生了幻觉。发生幻读的原因也是另外一个事务新增或者删除或者修改了第一个事务结果集里面的数据，同一个记录的数据内容被修改了，所有数据行的记录就变多或者变少了。
+
+## 100. 说一下 spring mvc 运行流程？
+
+- spring mvc 先将请求发送给 DispatcherServlet。
+- DispatcherServlet 查询一个或多个 HandlerMapping，找到处理请求的 Controller。
+- DispatcherServlet 再把请求提交到对应的 Controller。
+- Controller 进行业务逻辑处理后，会返回一个ModelAndView。
+- Dispathcher 查询一个或多个 ViewResolver 视图解析器，找到 ModelAndView 对象指定的视图对象。
+- 视图对象负责渲染返回给客户端。
+- Spring的基于注释的MVC框架简化了创建RESTful Web服务的过程。传统的Spring MVC控制器和RESTful Web服务控制器之间的关键区别在于: 创建HTTP响应主体的方式。虽然传统的MVC控制器依赖于View技术，但RESTful Web服务控制器只返回对象，对象数据作为JSON / XML直接写入HTTP响应。
+
+## 101. spring mvc 有哪些组件？
+
+- 前置控制器 DispatcherServlet。
+- 映射控制器 HandlerMapping。
+- 处理器 Controller。
+- 模型和视图 ModelAndView。
+- 视图解析器 ViewResolver。
+
+## 102. @RequestMapping 的作用是什么？
+
+将 http 请求映射到相应的类/方法上。
+
+## 103. @Autowired 的作用是什么？
+
+@Autowired 它可以对类成员变量、方法及构造函数进行标注，完成自动装配的工作，通过@Autowired 的使用来消除 set/get 方法。
+
+# Spring Boot/Spring Cloud
+
+## 104. 什么是 spring boot？
+
+spring boot 是为 spring 服务的，是用来简化新 spring 应用的初始搭建以及开发过程的。
+
+## 105. 为什么要用 spring boot？
+
+- 配置简单
+- 独立运行
+- 自动装配
+- 无代码生成和 xml 配置
+- 提供应用监控
+- 易上手
+- 提升开发效率
+
+## 106. spring boot 核心配置文件是什么？
+
+spring boot 核心的两个配置文件：
+
+- bootstrap (. yml 或者 . properties)：boostrap 由父 ApplicationContext 加载的，比 applicaton 优先加载，且 boostrap 里面的属性不能被覆盖；
+- application (. yml 或者 . properties)：用于 spring boot 项目的自动化配置。
+
+## 107. spring boot 配置文件有哪几种类型？它们有什么区别？
+
+配置文件有 . properties 格式和 . yml 格式，它们主要的区别是书法风格不同。
+
+. properties 配置如下：
+
+```
+spring. RabbitMQ. port=5672
+```
+
+. yml 配置如下：
+
+```
+spring:
+    RabbitMQ:
+        port: 5672
+```
+
+. yml 格式不支持 @PropertySource 注解导入。
+
+## 108. spring boot 有哪些方式可以实现热部署？
+
+- 使用 devtools 启动热部署，添加 devtools 库，在配置文件中把 spring. devtools. restart. enabled 设置为 true；
+- 使用 Intellij Idea 编辑器，勾上自动编译或手动重新编译。
+
+## 109. jpa 和 hibernate 有什么区别？
+
+jpa 全称 Java Persistence API，是 Java 持久化接口规范，hibernate 属于 jpa 的具体实现。
+
+## 110. 什么是 spring cloud？
+
+spring cloud 是一系列框架的有序集合。它利用 spring boot 的开发便利性巧妙地简化了分布式系统基础设施的开发，如服务发现注册、配置中心、消息总线、负载均衡、断路器、数据监控等，都可以用 spring boot 的开发风格做到一键启动和部署。
+
+## 111. spring cloud 断路器的作用是什么？
+
+在分布式架构中，断路器模式的作用也是类似的，当某个服务单元发生故障（类似用电器发生短路）之后，通过断路器的故障监控（类似熔断保险丝），向调用方返回一个错误响应，而不是长时间的等待。这样就不会使得线程因调用故障服务被长时间占用不释放，避免了故障在分布式系统中的蔓延。
+
+## 112. spring cloud 的核心组件有哪些？
+
+- Eureka：服务注册于发现。
+- Feign：基于动态代理机制，根据注解和选择的机器，拼接请求 url 地址，发起请求。
+- Ribbon：实现负载均衡，从一个服务的多台机器中选择一台。
+- Hystrix：提供线程池，不同的服务走不同的线程池，实现了不同服务调用的隔离，避免了服务雪崩的问题。
+- Zuul：网关管理，由 Zuul 网关转发请求给对应的服务。
+
+# MyBatis
+
+## 125. MyBatis 中 #{}和 ${}的区别是什么？
+
+`\#{}`是预编译处理，`${}`是字符替换。 在使用 `#{}`时，MyBatis 会将 SQL 中的 `#{}`替换成“?”，配合 PreparedStatement 的 set 方法赋值，这样可以有效的防止 SQL 注入，保证程序的运行安全。
+
+## 126. MyBatis 有几种分页方式？
+
+分页方式：逻辑分页和物理分页。
+
+**逻辑分页：** 使用 MyBatis 自带的 RowBounds 进行分页，它是一次性查询很多数据，然后在数据中再进行检索。
+
+**物理分页：** 自己手写 SQL 分页或使用分页插件 PageHelper，去数据库查询指定条数的分页数据的形式。
+
+## 127. RowBounds 是一次性查询全部结果吗？为什么？
+
+RowBounds 表面是在“所有”数据中检索数据，其实并非是一次性查询出所有数据，因为 MyBatis 是对 jdbc 的封装，在 jdbc 驱动中有一个 Fetch Size 的配置，它规定了每次最多从数据库查询多少条数据，假如你要查询更多数据，它会在你执行 next()的时候，去查询更多的数据。就好比你去自动取款机取 10000 元，但取款机每次最多能取 2500 元，所以你要取 4 次才能把钱取完。只是对于 jdbc 来说，当你调用 next()的时候会自动帮你完成查询工作。这样做的好处可以有效的防止内存溢出。
+
+## 128. MyBatis 逻辑分页和物理分页的区别是什么？
+
+- 逻辑分页是一次性查询很多数据，然后再在结果中检索分页的数据。这样做弊端是需要消耗大量的内存、有内存溢出的风险、对数据库压力较大。
+- 物理分页是从数据库查询指定条数的数据，弥补了一次性全部查出的所有数据的种种缺点，比如需要大量的内存，对数据库查询压力较大等问题。
+
+## 129. MyBatis 是否支持延迟加载？延迟加载的原理是什么？
+
+MyBatis 支持延迟加载，设置 lazyLoadingEnabled=true 即可。
+
+延迟加载的原理的是调用的时候触发加载，而不是在初始化的时候就加载信息。比如调用 a. getB(). getName()，这个时候发现 a. getB() 的值为 null，此时会单独触发事先保存好的关联 B 对象的 SQL，先查询出来 B，然后再调用 a. setB(b)，而这时候再调用 a. getB(). getName() 就有值了，这就是延迟加载的基本原理。配置1对多的时候
+
+## 130. 说一下 MyBatis 的一级缓存和二级缓存？
+
+- 一级缓存：基于 PerpetualCache 的 HashMap 本地缓存，它的声明周期是和 SQLSession 一致的，有多个 SQLSession 或者分布式的环境中数据库操作，可能会出现脏数据。当 Session flush 或 close 之后，该 Session 中的所有 Cache 就将清空，默认一级缓存是开启的。SQLSession 默认是和线程绑定的，一个线程有一个sql
+- 二级缓存：也是基于 PerpetualCache 的 HashMap 本地缓存，不同在于其存储作用域为 Mapper 级别的，如果多个SQLSession之间需要共享缓存，则需要使用到二级缓存，并且二级缓存可自定义存储源，如 Ehcache。默认不打开二级缓存，要开启二级缓存，使用二级缓存属性类需要实现 Serializable 序列化接口(可用来保存对象的状态)。
+
+开启二级缓存数据查询流程：二级缓存 -> 一级缓存 -> 数据库。
+
+缓存更新机制：当某一个作用域(一级缓存 Session/二级缓存 Mapper)进行了C/U/D 操作后，默认该作用域下所有 select 中的缓存将被 clear。
+
+## 131. MyBatis 和 hibernate 的区别有哪些？
+
+- 灵活性：MyBatis 更加灵活，自己可以写 SQL 语句，使用起来比较方便。
+- 可移植性：MyBatis 有很多自己写的 SQL，因为每个数据库的 SQL 可以不相同，所以可移植性比较差。
+- 学习和使用门槛：MyBatis 入门比较简单，使用门槛也更低。
+- 二级缓存：hibernate 拥有更好的二级缓存，它的二级缓存可以自行更换为第三方的二级缓存。
+
+## 132. MyBatis 有哪些执行器（Executor）？
+
+MyBatis 有三种基本的Executor执行器：
+
+- SimpleExecutor：每执行一次 update 或 select 就开启一个 Statement 对象，用完立刻关闭 Statement 对象；
+- ReuseExecutor：执行 update 或 select，以 SQL 作为 key 查找 Statement 对象，存在就使用，不存在就创建，用完后不关闭 Statement 对象，而是放置于 Map 内供下一次使用。简言之，就是重复使用 Statement 对象；
+- BatchExecutor：执行 update（没有 select，jdbc 批处理不支持 select），将所有 SQL 都添加到批处理中（addBatch()），等待统一执行（executeBatch()），它缓存了多个 Statement 对象，每个 Statement 对象都是 addBatch()完毕后，等待逐一执行 executeBatch()批处理，与 jdbc 批处理相同。
+
+## 133. MyBatis 分页插件的实现原理是什么？
+
+分页插件的基本原理是使用 MyBatis 提供的插件接口，实现自定义插件，在插件的拦截方法内拦截待执行的 SQL，然后重写 SQL，根据 dialect 方言，添加对应的物理分页语句和物理分页参数。
+
+## 134. MyBatis 如何编写一个自定义插件？
+
+**自定义插件实现原理**
+
+MyBatis 自定义插件针对 MyBatis 四大对象（Executor、StatementHandler、ParameterHandler、ResultSetHandler）进行拦截：
+
+- Executor：拦截内部执行器，它负责调用 StatementHandler 操作数据库，并把结果集通过 ResultSetHandler 进行自动映射，另外它还处理了二级缓存的操作；
+- StatementHandler：拦截 SQL 语法构建的处理，它是 MyBatis 直接和数据库执行 SQL 脚本的对象，另外它也实现了 MyBatis 的一级缓存；
+- ParameterHandler：拦截参数的处理；
+- ResultSetHandler：拦截结果集的处理。
+
+**自定义插件实现关键**
+
+MyBatis 插件要实现 Interceptor 接口，接口包含的方法，如下：
+
+```Java
+public interfaceInterceptor{   
+   Object intercept(Invocation invocation)throws Throwable;       
+   Object plugin(Object target);    
+   voidsetProperties(Properties properties);
+}
+```
+
+- setProperties 方法是在 MyBatis 进行配置插件的时候可以配置自定义相关属性，即：接口实现对象的参数配置；
+- plugin 方法是插件用于封装目标对象的，通过该方法我们可以返回目标对象本身，也可以返回一个它的代理，可以决定是否要进行拦截进而决定要返回一个什么样的目标对象，官方提供了示例：return Plugin. wrap(target, this)；
+- intercept 方法就是要进行拦截的时候要执行的方法。
+
+**自定义插件实现示例**
+
+官方插件实现：
+
+```Java
+@Intercepts({@Signature(type = Executor. class, method= "query",
+        args = {MappedStatement. class, Object. class, RowBounds. class, ResultHandler. class})})
+publicclassTestInterceptorimplementsInterceptor{
+   public Object intercept(Invocation invocation)throws Throwable {
+     Object target = invocation. getTarget(); //被代理对象
+     Method method = invocation. getMethod(); //代理方法
+     Object[] args = invocation. getArgs(); //方法参数
+     // do something . . . . . .  方法拦截前执行代码块
+     Object result = invocation. proceed();
+     // do something . . . . . . . 方法拦截后执行代码块
+     return result;
+   }
+   public Object plugin(Object target){
+     return Plugin. wrap(target, this);
+   }
+}
+```
+
+# Kafka
+
+## 155. 什么情况会导致 kafka 运行变慢？
+
+- cpu 性能瓶颈
+- 磁盘读写瓶颈
+- 网络瓶颈
+
+## 156. 使用 kafka 集群需要注意什么？
+
+- 集群的数量不是越多越好，最好不要超过 7 个，因为节点越多，消息复制需要的时间就越长，整个群组的吞吐量就越低。
+- 集群数量最好是单数，因为超过一半故障集群就不能用了，设置为单数容错率更高
+
+# Zookeeper
+
+## 157. zookeeper 是什么？
+
+zookeeper 是一个分布式的，开放源码的分布式应用程序协调服务，是 google chubby 的开源实现，是 hadoop 和 hbase 的重要组件。它是一个为分布式应用提供一致性服务的软件，提供的功能包括：配置维护、域名服务、分布式同步、组服务等。
+
+## 158. zookeeper 都有哪些功能？
+
+- 集群管理：监控节点存活状态、运行请求等。
+- 主节点选举：主节点挂掉了之后可以从备用的节点开始新一轮选主，主节点选举说的就是这个选举的过程，使用 zookeeper 可以协助完成这个过程。
+- 分布式锁：zookeeper 提供两种锁：独占锁、共享锁。独占锁即一次只能有一个线程使用资源，共享锁是读锁共享，读写互斥，即可以有多线线程同时读同一个资源，如果要使用写锁也只能有一个线程使用。zookeeper可以对分布式锁进行控制。
+- 命名服务：在分布式系统中，通过使用命名服务，客户端应用能够根据指定名字来获取资源或服务的地址，提供者等信息。
+
+## 159. zookeeper 有几种部署模式？
+
+zookeeper 有三种部署模式：
+
+- 单机部署：一台集群上运行；
+- 集群部署：多台集群运行；
+- 伪集群部署：一台集群启动多个 zookeeper 实例运行。
+
+## 160. zookeeper 怎么保证主从节点的状态同步？
+
+zookeeper 的核心是原子广播，这个机制保证了各个 server 之间的同步。实现这个机制的协议叫做 zab 协议。 zab 协议有两种模式，分别是恢复模式（选主）和广播模式（同步）。当服务启动或者在领导者崩溃后，zab 就进入了恢复模式，当领导者被选举出来，且大多数 server 完成了和 leader 的状态同步以后，恢复模式就结束了。状态同步保证了 leader 和 server 具有相同的系统状态。
+
+## 161. 集群中为什么要有主节点？
+
+在分布式环境中，有些业务逻辑只需要集群中的某一台机器进行执行，其他的机器可以共享这个结果，这样可以大大减少重复计算，提高性能，所以就需要主节点。
+
+## 162. 集群中有 3 台服务器，其中一个节点宕机，这个时候 zookeeper 还可以使用吗？
+
+可以继续使用，单数服务器只要没超过一半的服务器宕机就可以继续使用。
+
+## 163. 说一下 zookeeper 的通知机制？
+
+客户端端会对某个 znode 建立一个 watcher 事件，当该 znode 发生变化时，这些客户端会收到 zookeeper 的通知，然后客户端可以根据 znode 变化来做出业务上的改变。
+
+# MySQL
+
+## 164. 数据库的三范式是什么？
+
+- 第一范式：强调的是列的原子性，即数据库表的每一列都是不可分割的原子数据项。
+- 第二范式：要求实体的属性完全依赖于主关键字。所谓完全依赖是指不能存在仅依赖主关键字一部分的属性。
+- 第三范式：任何非主属性不依赖于其它非主属性。
+
+## 165. 一张自增表里面总共有 7 条数据，删除了最后 2 条数据，重启 MySQL 数据库，又插入了一条数据，此时 id 是几？
+
+- 表类型如果是 MyISAM ，那 id 就是 8。
+- 表类型如果是 InnoDB，那 id 就是 6。
+
+InnoDB 表只会把自增主键的最大 id 记录在内存中，所以重启之后会导致最大 id 丢失。
+
+## 166. 如何获取当前数据库版本？
+
+使用 select version() 获取当前 MySQL 数据库版本。
