@@ -1,4 +1,4 @@
-package com.study.es.self;
+package com.study.es;
 
 /**
  * @ClassName Constants
