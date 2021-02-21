@@ -32,25 +32,15 @@ import java.util.concurrent.locks.ReentrantLock;
 */
 public class FairLock implements Runnable {
 	public static ReentrantLock fairLock = new ReentrantLock(true);
-	/* (non-Javadoc)  
-	
-	 * <p>Title: run</p>  
-	
-	 * <p>Description: </p>  
-	  
-	
-	 * @see java.lang.Runnable#run()  
-	
-	 */
+
 	@Override
     public void run() {
-		// TODO Auto-generated method stub
 		while(true) {
 			try {
 				fairLock.lock();
 				System.out.println(Thread.currentThread().getName() + " get the lock");
 				Thread.sleep(1000);
-			}catch (Exception e) {
+			} catch (Exception e) {
 				// TODO: handle exception
 				e.printStackTrace();
 			} finally {

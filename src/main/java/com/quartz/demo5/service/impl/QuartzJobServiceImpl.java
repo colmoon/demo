@@ -30,7 +30,7 @@ public class QuartzJobServiceImpl implements QuartzJobService {
     QuartzManage quartzManage;
 
 
-    @PostConstruct
+//    @PostConstruct
     public void init(){
         //项目启动时初始化所有任务状态为停止状态
         updateAll();
@@ -94,7 +94,9 @@ public class QuartzJobServiceImpl implements QuartzJobService {
     public int delete(Integer... ids) {
         for (Integer id : ids){
             QuartzJob quartzJob = quartzJobMapper.get(id);
-            if (quartzJob == null) continue;
+            if (quartzJob == null) {
+                continue;
+            }
             try {
                 if (!STATUS_STOP.equals(quartzJob.getJobStatus())){
                     quartzManage.deleteJob(quartzJob);
