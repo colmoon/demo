@@ -22,11 +22,11 @@ public class MaxMin {
         list.add("abcde");
 
         // 获取最大值
-        int max = list.stream().map((s) -> s.length()).max(Integer :: compareTo).get();
+        int max = list.stream().map(String::length).max(Integer :: compareTo).orElse(0);
         System.out.println(max);
 
         // 获取最小值，另一种方法
-        int min = list.stream().min(Comparator.comparing((s) -> s.length())).get().length();
+        int min = list.stream().min(Comparator.comparing(String::length)).orElse("").length();
         System.out.println(min);
     }
 }

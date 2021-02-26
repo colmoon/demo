@@ -21,13 +21,13 @@ public class TestOptional {
         Integer value2 = 10;
 
         // Optional.ofNullable - 允许传递为 null 参数
-        Optional<Integer> a = Optional.ofNullable(value1);
+        Optional<Integer> a = Optional.empty();
 
         // Optional.of - 如果传递的参数是 null，抛出异常 NullPointerException
         Optional<Integer> b = Optional.of(value2);
         System.out.println(testOptional.sum(a,b));
 //        User user = null;
-        User user = new TestOptional().new User("Tom");
+        User user = new User("Tom");
         System.out.println(getUserName(user));
     }
 
@@ -42,7 +42,7 @@ public class TestOptional {
         Integer value1 = a.orElse(0);
 
         //Optional.get - 获取值，值需要存在
-        Integer value2 = b.get();
+        Integer value2 = b.orElse(0);
         return value1 + value2;
     }
 
@@ -52,7 +52,7 @@ public class TestOptional {
 
     @Data
     @AllArgsConstructor
-    private class User{
+    private static class User{
         private String name;
     }
 }
