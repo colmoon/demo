@@ -1,4 +1,4 @@
-package com.jdk8.function;
+package com.jdk8.chapter5;
 
 import java.util.Arrays;
 import java.util.List;
@@ -9,7 +9,7 @@ import static java.util.stream.Collectors.toList;
 
 /**
  * @classname: TestFlatMap
- * @description: TODO
+ * @description: TestFlatMap
  * @author: wuxiaojian
  * @create: 2021-04-09 14:12
  */

@@ -20,6 +20,7 @@ public class TestPredicate {
         for(int i:numbers) {
             list.add(i);
         }
+        int product = list.stream().reduce(1, (a, b) -> a * b);
         Predicate<Integer> p1 = i -> i > 5;
         Predicate<Integer> p2 = i -> i < 20;
         Predicate<Integer> p3 = i -> i % 2 == 0;
