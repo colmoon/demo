@@ -14,13 +14,13 @@ public class Test2 {
         }
  
         // Java 8之后：
-        List list2 = Arrays.asList("a", "b", "c", "d");
-        list2.forEach(n -> System.out.println(n));
+        List<String> list2 = Arrays.asList("a", "b", "c", "d");
+        list2.forEach(System.out::println);
  
         // 使用Java 8的方法引用更方便，方法引用由::双冒号操作符标示，
         list2.forEach(System.out::println);
 
-        Stream<?> flatMap = Stream.of(Arrays.asList("a", "b"), Arrays.asList(1, 2, 3)).flatMap((s) -> s.stream());
+        Stream<?> flatMap = Stream.of(Arrays.asList("a", "b"), Arrays.asList(1, 2, 3)).flatMap(Collection::stream);
         flatMap.forEach(System.out :: println);
 
         List<String> list = new ArrayList<>(Arrays.asList("I","love","you","too"));
@@ -28,8 +28,9 @@ public class Test2 {
         list.forEach(new Consumer<String>(){
             @Override
             public void accept(String str){
-                if(str.length()>3)
+                if(str.length() > 3) {
                     System.out.println(str);
+                }
             }
         });
         //lambda表达式

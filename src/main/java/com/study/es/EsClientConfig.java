@@ -1,4 +1,4 @@
-package com.study.es.self;
+package com.study.es;
 
 import org.apache.http.HttpHost;
 import org.elasticsearch.client.RestClient;
@@ -19,7 +19,7 @@ public class EsClientConfig {
 
     private static class SingleTonHolder{
         private static RestHighLevelClient INSTANCE = new RestHighLevelClient(
-                RestClient.builder(new HttpHost("localhost", 9200, "http")));
+                RestClient.builder(new HttpHost("192.168.30.151", 9200, "http")));
     }
 
     /*

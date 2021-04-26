@@ -1,4 +1,4 @@
-package com.study.es.self;
+package com.study.es;
 
 import org.elasticsearch.action.DocWriteResponse;
 import org.elasticsearch.action.support.WriteRequest;

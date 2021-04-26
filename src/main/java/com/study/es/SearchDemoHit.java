@@ -1,4 +1,4 @@
-package com.study.es.self;
+package com.study.es;
 
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;

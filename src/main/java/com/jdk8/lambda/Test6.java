@@ -7,7 +7,7 @@ import java.util.function.Predicate;
 public class Test6 {
  
     public static void filter(List<String> languages, Predicate<String> condition) {
-        languages.stream().filter(x -> condition.test(x)).forEach(x -> System.out.println(x + " "));
+        languages.stream().filter(condition).forEach(x -> System.out.println(x + " "));
     }
  
     public static void main(String[] args) {
