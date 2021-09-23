@@ -59,8 +59,8 @@ public class ThreadPoolDemo {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		MyTask myTask = new MyTask();
-		ExecutorService executorService = Executors.newFixedThreadPool(5);
-//		ExecutorService executorService = Executors.newCachedThreadPool();
+//		ExecutorService executorService = Executors.newFixedThreadPool(5);
+		ExecutorService executorService = Executors.newCachedThreadPool();
 		for (int i = 0; i < 10; i++) {
 //			executorService.submit(myTask);
 			executorService.execute(myTask);
