@@ -61,7 +61,7 @@ public class LockSupportDemo {
 	public static void main(String[] args) throws InterruptedException{
 		// TODO Auto-generated method stub
 		t1.start();
-		Thread.sleep(100);
+		Thread.sleep(3000);
 		t2.start();
 		LockSupport.unpark(t1);
 		LockSupport.unpark(t2);
