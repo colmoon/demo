@@ -1,4 +1,4 @@
-package com.anhen.design.chapter1;
+package com.anhen.design.chapter1.lsp;
 
 /**
  * @author wuxiaojian
