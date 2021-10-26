@@ -1,4 +1,4 @@
-package com.anhen.design.chapter13.prototype;
+package com.anhen.design.chapter13.prototype.instance;
 
 public class AdvTemplate {
     //广告信名称
