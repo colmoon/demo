@@ -1,5 +1,0 @@
-CREATE TABLE category_ (
-  id int(11) NOT NULL AUTO_INCREMENT,
-  name varchar(30),
-  PRIMARY KEY (id)
-) DEFAULT CHARSET=UTF8;

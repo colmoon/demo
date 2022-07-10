@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: demo
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 10.50.1.136:8848
+        register-enabled: true
+      config:
+        server-addr: 10.50.1.136:8848
+        group: DEFAULT_GROUP
+        fileExtension: yaml
+        shared-configs[0]:
+          data-id: application.yaml
+          group: DEFAULT_GROUP
+          refresh: true
+        enabled: false
