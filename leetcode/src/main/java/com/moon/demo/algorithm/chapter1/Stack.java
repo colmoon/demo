@@ -105,7 +105,9 @@ public class Stack<Item> implements Iterable<Item> {
      * @throws NoSuchElementException if this stack is empty
      */
     public Item pop() {
-        if (isEmpty()) throw new NoSuchElementException("Stack underflow");
+        if (isEmpty()) {
+            throw new NoSuchElementException("Stack underflow");
+        }
         Item item = first.item;        // save item to return
         first = first.next;            // delete first node
         n--;
@@ -120,7 +122,9 @@ public class Stack<Item> implements Iterable<Item> {
      * @throws NoSuchElementException if this stack is empty
      */
     public Item peek() {
-        if (isEmpty()) throw new NoSuchElementException("Stack underflow");
+        if (isEmpty()) {
+            throw new NoSuchElementException("Stack underflow");
+        }
         return first.item;
     }
 
@@ -170,7 +174,9 @@ public class Stack<Item> implements Iterable<Item> {
 
         @Override
         public Item next() {
-            if (!hasNext()) throw new NoSuchElementException();
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
             Item item = current.item;
             current = current.next; 
             return item;
@@ -187,10 +193,11 @@ public class Stack<Item> implements Iterable<Item> {
         Stack<String> stack = new Stack<String>();
         while (!StdIn.isEmpty()) {
             String item = StdIn.readString();
-            if (!item.equals("-"))
+            if (!"-".equals(item)) {
                 stack.push(item);
-            else if (!stack.isEmpty())
+            } else if (!stack.isEmpty()) {
                 StdOut.print(stack.pop() + " ");
+            }
         }
         StdOut.println("(" + stack.size() + " left on stack)");
     }
