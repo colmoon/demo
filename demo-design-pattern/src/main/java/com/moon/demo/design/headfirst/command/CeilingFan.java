@@ -1,6 +1,7 @@
 package com.moon.demo.design.headfirst.command;
 
-import com.moon.demo.algorithm.chapter1.Stack;
+
+import java.util.Stack;
 
 /**
  * @ClassName CeilingFan
