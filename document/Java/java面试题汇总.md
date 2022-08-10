@@ -690,6 +690,10 @@ ThreadLocal 的经典使用场景是数据库连接和 session 管理等。
 
 synchronized 是由一对 monitorenter/monitorexit 指令实现的，monitor 对象是同步的基本实现单元。在 Java 6 之前，monitor 的实现完全是依靠操作系统内部的互斥锁，因为需要进行用户态到内核态的切换，所以同步操作是一个无差别的重量级操作，性能也很低。但在 Java 6 的时候，Java 虚拟机 对此进行了大刀阔斧地改进，提供了三种不同的 monitor 实现，也就是常说的三种不同的锁：偏向锁（Biased Locking）、轻量级锁和重量级锁，大大改进了其性能。
 
+如果synchronized加在一个类的普通方法上，那么相当于synchronized(this)。
+
+如果synchronized加载一个类的静态方法上，那么相当于synchronized(Class对象)。
+
 ## 53. synchronized 和 volatile 的区别是什么？
 
 - volatile 是变量修饰符；synchronized 是修饰类、方法、代码段。
