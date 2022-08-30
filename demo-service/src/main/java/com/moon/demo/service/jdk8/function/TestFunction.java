@@ -36,6 +36,8 @@ public class TestFunction {
 		//返回一个执行了apply()方法之后只会返回输入参数的函数对象
 		Object identity = Function.identity().apply("huohuo");
 		System.out.println(identity);
+
+		printer((s) -> "Length is " + s.length(), "abc");
 	}
 	
 	// 方法
@@ -55,6 +57,10 @@ public class TestFunction {
 	public static long testAbs(long s, Function<Long, Long> fun) {
 		Long l = fun.apply(s);
 		return l;
+	}
+
+	public static <T> void printer(Function<T, String> function, T t){
+		System.out.println(function.apply(t));
 	}
 
 }

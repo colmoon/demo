@@ -17,6 +17,8 @@ public class TestConsumer {
 
         // 调用
         testCon(str, System.out::println);
+
+        TestFunction.printer((s) -> "Length is " + s.length(), "abc");
     }
 
     /**
