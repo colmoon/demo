@@ -2,6 +2,7 @@ package com.moon.demo.reactor;
 
 
 
+import reactor.core.Disposable;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
@@ -35,7 +36,7 @@ public class TestReactor {
         Flux.fromIterable(integers).subscribe(System.out::println);
 
         Stream<Integer> stream = integers.stream();
-        Flux.fromStream(stream).subscribe(System.out::println);
+        Disposable subscribe = Flux.fromStream(stream).subscribe(System.out::println);
 
         Mono<String> data = Mono.just("bole");
 
@@ -76,6 +77,37 @@ public class TestReactor {
                 .forEach(System.out::println);
 
 
+        Flux<String> ids = Flux.just("1", "2");
+        Flux<String> combinations = ids.flatMap(id -> {
+           Mono<String> nameTask = getName(id);
+           Mono<Integer> ageTask = getAge(id);
+
+           return nameTask.zipWith(ageTask, (name, age) -> name + " is " + age + " years old");
+        });
+        Mono<List<String>> result = combinations.collectList();
+        List<String> block = result.block();
+        System.out.println(block);
+
+    }
+
+    protected static Mono<String> getName(String id){
+        if ("1".equals(id)){
+            return Mono.just("Tom");
+        } else if ("2".equals(id)){
+            return Mono.just("Jack");
+        } else {
+            return Mono.just("Susan");
+        }
+    }
+
+    protected static Mono<Integer> getAge(String id){
+        if ("1".equals(id)){
+            return Mono.just(10);
+        } else if ("2".equals(id)){
+            return Mono.just(11);
+        } else {
+            return Mono.just(12);
+        }
     }
 
 
