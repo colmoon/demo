@@ -33,6 +33,7 @@
         <antlr4.version>4.8</antlr4.version>
         <aviator.version>4.2.10</aviator.version>
         <californium.version>2.0.0-M15</californium.version>
+        <reactor.version>3.4.18</reactor.version>
     </properties>
 
     <modules>
@@ -46,6 +47,7 @@
         <module>demo-anltr</module>
         <module>leetcode</module>
         <module>concurrency</module>
+        <module>reactor</module>
     </modules>
 
     <dependencyManagement>
@@ -158,6 +160,11 @@
                 <groupId>org.eclipse.californium</groupId>
                 <artifactId>californium-core</artifactId>
                 <version>${californium.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.projectreactor</groupId>
+                <artifactId>reactor-core</artifactId>
+                <version>${reactor.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
