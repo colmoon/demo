@@ -21,7 +21,7 @@
         <java.version>1.8</java.version>
         <easyexcel.version>3.0.2</easyexcel.version>
         <xmlbeans.version>3.1.0</xmlbeans.version>
-        <elasticsearch.client.version>6.8.13</elasticsearch.client.version>
+        <elasticsearch.client.version>6.8.17</elasticsearch.client.version>
         <spring-kafka.version>2.6.6</spring-kafka.version>
         <commons-compress.version>1.21</commons-compress.version>
         <zip.version>2.7.0</zip.version>
