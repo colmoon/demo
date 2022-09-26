@@ -13,8 +13,9 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeProperty;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
-import java.io.FileInputStream;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class TestLEvaluatorWithProps {
     /** Sample "calculator" using property of nodes */
@@ -59,7 +60,7 @@ public class TestLEvaluatorWithProps {
         }
         InputStream is = System.in;
         if ( inputFile!=null ) {
-            is = new FileInputStream(inputFile);
+            is = Files.newInputStream(Paths.get(inputFile));
         }
         ANTLRInputStream input = new ANTLRInputStream(is);
         LExprLexer lexer = new LExprLexer(input);

@@ -12,8 +12,9 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
-import java.io.FileInputStream;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -38,7 +39,7 @@ public class TestPropertyFile {
         }
         InputStream is = System.in;
         if ( inputFile!=null ) {
-            is = new FileInputStream(inputFile);
+            is = Files.newInputStream(Paths.get(inputFile));
         }
         ANTLRInputStream input = new ANTLRInputStream(is);
         PropertyFileLexer lexer = new PropertyFileLexer(input);
