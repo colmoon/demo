@@ -48,6 +48,7 @@
         <module>leetcode</module>
         <module>concurrency</module>
         <module>reactor</module>
+        <module>flink</module>
     </modules>
 
     <dependencyManagement>
