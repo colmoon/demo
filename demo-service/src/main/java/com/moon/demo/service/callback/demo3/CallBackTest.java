@@ -1,8 +1,10 @@
 package com.moon.demo.service.callback.demo3;
 
+import com.moon.demo.service.model.Response;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * @classname: CallBackTest
@@ -30,6 +32,20 @@ public class CallBackTest {
                 log.error(throwable.getMessage(), throwable);
             }
         });
+
+        //java内置的异步调用
+        CompletableFuture.supplyAsync(CallBackTest::doBiz)
+                .whenComplete((response, throwable) -> {
+                    log.info(response.getMessage());
+                    if (Objects.nonNull(throwable)) {
+                        log.error(throwable.getMessage(), throwable);
+                    }
+                });
+    }
+
+    public static Response doBiz() {
+        ServiceA serviceA = new ServiceA();
+        return serviceA.call();
     }
 
 }
