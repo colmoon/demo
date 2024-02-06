@@ -34,6 +34,7 @@
         <aviator.version>4.2.10</aviator.version>
         <californium.version>2.0.0-M15</californium.version>
         <reactor.version>3.4.18</reactor.version>
+        <netty.version>4.1.106.Final</netty.version>
     </properties>
 
     <modules>
@@ -49,6 +50,7 @@
         <module>concurrency</module>
         <module>reactor</module>
         <module>flink</module>
+        <module>mybatis</module>
     </modules>
 
     <dependencyManagement>
@@ -171,6 +173,12 @@
                 <groupId>io.projectreactor</groupId>
                 <artifactId>reactor-test</artifactId>
                 <version>${reactor.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/io.netty/netty-all -->
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-all</artifactId>
+                <version>${netty.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

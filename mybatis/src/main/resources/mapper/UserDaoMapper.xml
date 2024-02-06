@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace=绑定一个对应的Dao/Mapper接口,等价于以前去实现接口并重写方法-->
+<mapper namespace="com.moon.mybatis.mapper.UserDao">
+    <!--  select查询语om.dbappsecurity.soar.auth.service.mapper.DeviceAuthMappe句  -->
+    <!--id等价于以前去实现接口并重写方法   resultType：执行sql返回的结果集，仅需要返回接口的方法中的泛型类型即可 -->
+    <select id="getUserList" resultMap="userMap">
+        select *
+        from t_user
+    </select>
+
+    <insert id="insert" parameterType="com.moon.mybatis.model.UserPO">
+        insert into t_user(user_name, password)
+        values (#{userName}, #{password})
+    </insert>
+
+    <update id="updateUser" parameterType="com.moon.mybatis.model.UserPO">
+        update t_user
+        set user_name=#{userName},
+            password=#{password}
+        where id = #{id}
+    </update>
+
+    <delete id="deleteUser" parameterType="com.moon.mybatis.model.UserPO">
+        delete
+        from t_user
+        where id = #{id}
+    </delete>
+
+    <select id="selectUserById" resultMap="userMap">
+        select*
+        from t_user
+        where id = #{id}
+    </select>
+
+    <resultMap id="userMap" type="com.moon.mybatis.model.UserPO">
+        <id property="id" column="id"></id>
+        <result property="userName" column="user_name"/>
+        <result property="realName" column="real_name"/>
+    </resultMap>
+
+</mapper>

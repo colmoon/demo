@@ -6,11 +6,9 @@ import com.moon.demo.service.model.MsgBoxModel;
 import com.moon.demo.service.model.Response;
 import com.moon.demo.service.model.ResponseBuilder;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
-import org.apache.http.HttpStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,12 +37,6 @@ public class IndexController {
 
     @ApiOperation(value = "JVM内存分配", notes = "JVM内存分配",
             httpMethod = "POST", produces = MediaType.APPLICATION_JSON_VALUE)
-    @ApiResponses({
-            @ApiResponse(code = HttpStatus.SC_OK, message = "请求已经受理, 执行结果见返回码"),
-            @ApiResponse(code = HttpStatus.SC_BAD_REQUEST, message = "传递参数非法"),
-            @ApiResponse(code = HttpStatus.SC_INTERNAL_SERVER_ERROR, message = "服务器异常"),
-    })
-
     @AnalysisActuator(note = "获取JVM内存分配方法")
     @SysLog(value = "获取JVM内存分配方法")
     @RequestMapping(value = "/bug", method = RequestMethod.POST)
@@ -55,11 +47,11 @@ public class IndexController {
                 byte[] mem = new byte[num * SIZE_1M];
             }
             logger.info("内存分配成功, ioc: {}", num);
-            return ResponseEntity.status(HttpStatus.SC_OK).body(new MsgBoxModel(CODE_SUCCESS
+            return ResponseEntity.status(HttpStatus.OK).body(new MsgBoxModel(CODE_SUCCESS
                     , "内存分配成功", "test"));
         } catch (Exception e) {
             logger.error("内存分配失败", e);
-            return ResponseEntity.status(HttpStatus.SC_OK).body(
+            return ResponseEntity.status(HttpStatus.OK).body(
                     new MsgBoxModel(CODE_FAILURE, "内存分配失败", null));
         }
     }

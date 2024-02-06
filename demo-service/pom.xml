@@ -45,14 +45,14 @@
             <artifactId>freemarker</artifactId>
         </dependency>
         <!--   ES     -->
-        <dependency>
+        <!--<dependency>
             <groupId>org.elasticsearch.client</groupId>
             <artifactId>elasticsearch-rest-high-level-client</artifactId>
         </dependency>
         <dependency>
             <groupId>org.elasticsearch</groupId>
             <artifactId>elasticsearch</artifactId>
-        </dependency>
+        </dependency>-->
         <!--  webSocket      -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -69,9 +69,14 @@
             <artifactId>spring-test</artifactId>
         </dependency>
         <!--    redis    -->
-        <dependency>
+<!--        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>-->
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-all</artifactId>
+            <version>${netty.version}</version>
         </dependency>
         <!--aop切面配置-->
         <dependency>
